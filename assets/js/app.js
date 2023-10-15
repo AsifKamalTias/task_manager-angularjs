@@ -10,8 +10,9 @@ app.config(function ($routeProvider) {
         });
 });
 
-app.run(function ($rootScope) {
-    $rootScope.items = [];
+app.run(function ($rootScope, localStorageService) {
+    $rootScope.items = localStorageService.getItems() || [];
+
     $rootScope.error = false;
     $rootScope.errorMessage = '';
 
@@ -21,23 +22,21 @@ app.run(function ($rootScope) {
     $rootScope.$on('$routeChangeError', function () {
         $location.path('/error');
     });
-
-    // $rootScope.$on('$routeChangeStart', function () {
-    //     $rootScope.loading = true;
-    // });
-
-    // $rootScope.$on('$routeChangeSuccess', function () {
-    //     $rootScope.loading = false;
-    // });
-
-    // $rootScope.$on('$routeChangeError', function () {
-    //     $rootScope.loading = false;
-    // });
 });
 
 app.service('quoteService', function ($http) {
     this.getQuote = function () {
         return $http.get('https://api.quotable.io/random');
+    }
+});
+
+app.service('localStorageService', function () {
+    this.saveItems = function (items) {
+        localStorage.setItem('items', JSON.stringify(items));
+    }
+
+    this.getItems = function () {
+        return JSON.parse(localStorage.getItem('items'));
     }
 });
 
@@ -48,11 +47,7 @@ app.directive('footerText', function () {
     }
 });
 
-app.controller('addItemController', function ($scope, $rootScope) {
-
-});
-
-app.controller('itemController', function ($scope, $rootScope) {
+app.controller('itemController', function ($scope, $rootScope, localStorageService) {
     $scope.item = '';
     $scope.addItem = function () {
         if ($scope.item === '') {
@@ -69,6 +64,8 @@ app.controller('itemController', function ($scope, $rootScope) {
 
         if ($rootScope.editMode) {
             $rootScope.items[$rootScope.editIndex] = $scope.item;
+            localStorageService.saveItems($rootScope.items);
+
             $rootScope.editMode = false;
             $rootScope.editIndex = -1;
             $scope.item = '';
@@ -77,7 +74,11 @@ app.controller('itemController', function ($scope, $rootScope) {
             return;
         }
 
-        $rootScope.items.push($scope.item);
+        // $rootScope.items.push($scope.item);
+
+        $rootScope.items = [...$rootScope.items, $scope.item];
+        localStorageService.saveItems($rootScope.items);
+
         $scope.item = '';
         $rootScope.error = false;
         $rootScope.errorMessages = '';
@@ -91,6 +92,7 @@ app.controller('itemController', function ($scope, $rootScope) {
 
     $scope.removeItem = function (index) {
         $rootScope.items.splice(index, 1);
+        localStorageService.saveItems($rootScope.items);
     }
 
     $scope.editItem = function (index) {
