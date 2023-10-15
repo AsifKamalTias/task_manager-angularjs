@@ -4,13 +4,13 @@
         <input type="search" name="search" id="search" class="input input-bordered input-warning w-full"
             placeholder="Search..." ng-model="search">
         <ul>
-            <li class="flex justify-between items-center bg-primary mt-2 p-2 rounded"
+            <li class="flex justify-between items-center bg-primary  text-white mt-2 p-2 rounded"
                 ng-repeat="(index, item) in items | filter: search">
                 <span>{{item}}</span>
                 <div>
-                    <span class="cursor-pointer text-white" ng-click="editItem(index)">
+                    <span class="cursor-pointer" ng-click="editItem(index)">
                         <i class="bi bi-pencil-square"></i></span>
-                    <span class="cursor-pointer text-white" ng-click="removeItem(index)">
+                    <span class="cursor-pointer" ng-click="removeItem(index)">
                         <i class="bi bi-x-circle"></i></span>
                 </div>
             </li>
@@ -18,8 +18,8 @@
         </ul>
     </div>
     <div class="my-4">
-        <input type="text" name="item" id="item" class="input input-bordered input-accent w-full" placeholder="Item..."
-            ng-model="item">
+        <input type="text" name="item" id="item" class="input input-bordered w-full" placeholder="Item..."
+            ng-class="{'input-accent': !error, 'input-error': error}" ng-model="item" ng-keyup="submitItem($event)">
         <button class="w-full btn btn-success text-white p-1 mt-2" ng-click="addItem()" id="add-btn">Save</button>
         <span class="text-red-800 font-bold" ng-show="error">{{errorMessage}}.</span>
     </div>

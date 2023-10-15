@@ -83,6 +83,12 @@ app.controller('itemController', function ($scope, $rootScope) {
         $rootScope.errorMessages = '';
     }
 
+    $scope.submitItem = function (event) {
+        if (event.keyCode === 13) {
+            $scope.addItem();
+        }
+    }
+
     $scope.removeItem = function (index) {
         $rootScope.items.splice(index, 1);
     }
@@ -108,10 +114,4 @@ app.controller('quoteController', function ($scope, $interval, quoteService) {
             }
         });
     }, 10000);
-});
-
-document.addEventListener('keydown', function (event) {
-    if (event.keyCode === 13) {
-        document.getElementById('add-btn').click();
-    }
 });
