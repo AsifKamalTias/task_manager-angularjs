@@ -28,12 +28,15 @@
                         <span class="cursor-pointer" ng-click="removeItem(index)">
                             <i class="bi bi-x-circle"></i></span>
                     </li>
+                    <li ng-if="items.length === 0" class="mt-2 p-2 text-center">(Empty List)</li>
                 </ul>
             </div>
             <div class="my-4" ng-controller="addItemController">
                 <input type="text" name="item" id="item" class="input input-bordered input-accent w-full"
                     placeholder="Item..." ng-model="item">
-                <button class="w-full btn btn-success text-white p-1 mt-2" ng-click="addItem()">Add</button>
+                <button class="w-full btn btn-success text-white p-1 mt-2" ng-click="addItem()"
+                    id="add-btn">Add</button>
+                <span class="text-red-800 font-bold" ng-show="error">Please an enter item.</span>
             </div>
         </div>
     </div>
