@@ -123,7 +123,3 @@ app.controller('quoteController', function ($scope, $interval, quoteService) {
         });
     }, 10000);
 });
-
-app.controller('locationController', function ($scope, $location) {
-    $scope.url = $location.host() + ':' + $location.port();
-});
