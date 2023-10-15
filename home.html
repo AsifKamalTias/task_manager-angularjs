@@ -1,0 +1,26 @@
+<h1 class="text-center text-2xl pb-2 border-b-2">Task List</h1>
+<div class="my-3">
+    <div>
+        <input type="search" name="search" id="search" class="input input-bordered input-warning w-full"
+            placeholder="Search..." ng-model="search">
+        <ul ng-controller="itemController">
+            <li class="flex justify-between items-center bg-primary mt-2 p-2 rounded"
+                ng-repeat="(index, item) in items | filter: search">
+                <span>{{item}}</span>
+                <span class="cursor-pointer" ng-click="removeItem(index)">
+                    <i class="bi bi-x-circle"></i></span>
+            </li>
+            <li ng-if="items.length === 0" class="mt-2 p-2 text-center">(Empty List)</li>
+        </ul>
+    </div>
+    <div class="my-4" ng-controller="addItemController">
+        <input type="text" name="item" id="item" class="input input-bordered input-accent w-full" placeholder="Item..."
+            ng-model="item">
+        <button class="w-full btn btn-success text-white p-1 mt-2" ng-click="addItem()" id="add-btn">Add</button>
+        <span class="text-red-800 font-bold" ng-show="error">Please enter an item.</span>
+    </div>
+</div>
+<div ng-controller="quoteController">
+    <q>{{quote.text}}</q>
+    <p>-{{quote.author}}</p>
+</div>
