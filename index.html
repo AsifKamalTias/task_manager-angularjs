@@ -19,11 +19,11 @@
         <h1 class="text-center text-2xl pb-2 border-b-2">Shopping List</h1>
         <div class="my-3">
             <div>
-                <input type="text" name="search" id="search" class="input input-bordered input-warning w-full"
-                    placeholder="Search...">
+                <input type="search" name="search" id="search" class="input input-bordered input-warning w-full"
+                    placeholder="Search..." ng-model="search">
                 <ul ng-controller="itemController">
                     <li class="flex justify-between items-center bg-purple-700 mt-2 p-2 rounded"
-                        ng-repeat="(index, item) in items">
+                        ng-repeat="(index, item) in items | filter: search">
                         <span>{{item}}</span>
                         <span class="cursor-pointer" ng-click="removeItem(index)">
                             <i class="bi bi-x-circle"></i></span>
@@ -36,7 +36,7 @@
                     placeholder="Item..." ng-model="item">
                 <button class="w-full btn btn-success text-white p-1 mt-2" ng-click="addItem()"
                     id="add-btn">Add</button>
-                <span class="text-red-800 font-bold" ng-show="error">Please an enter item.</span>
+                <span class="text-red-800 font-bold" ng-show="error">Please enter an item.</span>
             </div>
         </div>
     </div>
