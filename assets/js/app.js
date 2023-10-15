@@ -13,6 +13,26 @@ app.config(function ($routeProvider) {
 app.run(function ($rootScope) {
     $rootScope.items = [];
     $rootScope.error = false;
+    $rootScope.errorMessage = '';
+
+    $rootScope.editMode = false;
+    $rootScope.editIndex = -1;
+
+    $rootScope.$on('$routeChangeError', function () {
+        $location.path('/error');
+    });
+
+    // $rootScope.$on('$routeChangeStart', function () {
+    //     $rootScope.loading = true;
+    // });
+
+    // $rootScope.$on('$routeChangeSuccess', function () {
+    //     $rootScope.loading = false;
+    // });
+
+    // $rootScope.$on('$routeChangeError', function () {
+    //     $rootScope.loading = false;
+    // });
 });
 
 app.service('quoteService', function ($http) {
@@ -29,21 +49,48 @@ app.directive('footerText', function () {
 });
 
 app.controller('addItemController', function ($scope, $rootScope) {
+
+});
+
+app.controller('itemController', function ($scope, $rootScope) {
     $scope.item = '';
     $scope.addItem = function () {
         if ($scope.item === '') {
             $rootScope.error = true;
+            $rootScope.errorMessage = 'Please enter an item';
             return;
         }
+
+        if ($rootScope.items.indexOf($scope.item) !== -1 && !$rootScope.editMode) {
+            $rootScope.error = true;
+            $rootScope.errorMessage = 'This item is already in your shopping list';
+            return;
+        }
+
+        if ($rootScope.editMode) {
+            $rootScope.items[$rootScope.editIndex] = $scope.item;
+            $rootScope.editMode = false;
+            $rootScope.editIndex = -1;
+            $scope.item = '';
+            $rootScope.error = false;
+            $rootScope.errorMessages = '';
+            return;
+        }
+
         $rootScope.items.push($scope.item);
         $scope.item = '';
         $rootScope.error = false;
+        $rootScope.errorMessages = '';
     }
-});
 
-app.controller('itemController', function ($scope, $rootScope) {
     $scope.removeItem = function (index) {
         $rootScope.items.splice(index, 1);
+    }
+
+    $scope.editItem = function (index) {
+        $rootScope.editIndex = index;
+        $scope.item = $rootScope.items[index];
+        $rootScope.editMode = true;
     }
 });
 
