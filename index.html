@@ -19,23 +19,21 @@
         <h1 class="text-center text-2xl pb-2 border-b-2">Shopping List</h1>
         <div class="my-3">
             <div>
-                <input type="text" name="search" id="search" class="input input-bordered input-accent w-full"
+                <input type="text" name="search" id="search" class="input input-bordered input-warning w-full"
                     placeholder="Search...">
-                <ul>
-                    <li class="flex justify-between items-center mt-2 p-2 border rounded">
-                        <span>Banana</span>
-                        <span class="cursor-pointer	"><i class="bi bi-x-circle"></i></span>
-                    </li>
-                    <li class="flex justify-between items-center mt-2 p-2 border rounded">
-                        <span>Banana</span>
-                        <span class="cursor-pointer	"><i class="bi bi-x-circle"></i></span>
+                <ul ng-controller="itemController">
+                    <li class="flex justify-between items-center bg-purple-700 mt-2 p-2 rounded"
+                        ng-repeat="(index, item) in items">
+                        <span>{{item}}</span>
+                        <span class="cursor-pointer" ng-click="removeItem(index)">
+                            <i class="bi bi-x-circle"></i></span>
                     </li>
                 </ul>
             </div>
-            <div class="my-4">
+            <div class="my-4" ng-controller="addItemController">
                 <input type="text" name="item" id="item" class="input input-bordered input-accent w-full"
-                    placeholder="Item...">
-                <button class="w-full btn btn-success text-white p-1 mt-2">Add</button>
+                    placeholder="Item..." ng-model="item">
+                <button class="w-full btn btn-success text-white p-1 mt-2" ng-click="addItem()">Add</button>
             </div>
         </div>
     </div>
