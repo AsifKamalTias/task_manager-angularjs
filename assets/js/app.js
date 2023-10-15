@@ -3,6 +3,14 @@ app.run(function ($rootScope) {
     $rootScope.items = [];
     $rootScope.error = false;
 });
+
+app.directive('footerText', function () {
+    return {
+        restrict: 'E',
+        template: 'Made with <i class="bi bi-heart-fill text-red-500"></i> by ASIF KAMAL TIAS'
+    }
+});
+
 app.controller('addItemController', function ($scope, $rootScope) {
     $scope.item = '';
     $scope.addItem = function () {
