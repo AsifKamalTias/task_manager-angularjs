@@ -98,6 +98,12 @@ app.controller('itemController', function ($scope, $rootScope) {
         $scope.item = $rootScope.items[index];
         $rootScope.editMode = true;
     }
+
+    $scope.cancelEdit = function () {
+        $rootScope.editMode = false;
+        $rootScope.editIndex = -1;
+        $scope.item = '';
+    }
 });
 
 app.controller('quoteController', function ($scope, $interval, quoteService) {

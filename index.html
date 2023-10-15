@@ -21,15 +21,15 @@
             <div class="navbar bg-primary text-primary-content flex justify-between items-center">
                 <a href="#/!" class="btn btn-ghost normal-case text-xl">Task Manager</a>
                 <div class="flex gap-4">
-                    <a href="#/!">Home</a>
+                    <a href="#!">Home</a>
                     <a href="#!about">About</a>
                 </div>
             </div>
         </header>
-        <main class="mx-4 my-4">
+        <main class="mx-4 md:mx-52 my-4">
             <ng-view></ng-view>
         </main>
-        <footer class="absolute inset-x-0 bottom-4" ng-include="'./footer.html'"></footer>
+        <footer class="p-8" ng-include="'./footer.html'"></footer>
     </div>
     <script src="./assets/js/app.js"></script>
 </body>

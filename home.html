@@ -4,10 +4,11 @@
         <input type="search" name="search" id="search" class="input input-bordered input-warning w-full"
             placeholder="Search..." ng-model="search">
         <ul>
-            <li class="flex justify-between items-center bg-primary  text-white mt-2 p-2 rounded"
-                ng-repeat="(index, item) in items | filter: search">
+            <li class="flex justify-between items-center text-white mt-2 p-2 rounded"
+                ng-repeat="(index, item) in items | filter: search"
+                ng-class="{'bg-warning' : index === editIndex, 'bg-primary' : index !== editIndex}">
                 <span>{{item}}</span>
-                <div>
+                <div class="flex gap-3">
                     <span class="cursor-pointer" ng-click="editItem(index)">
                         <i class="bi bi-pencil-square"></i></span>
                     <span class="cursor-pointer" ng-click="removeItem(index)">
@@ -19,9 +20,12 @@
     </div>
     <div class="my-4">
         <input type="text" name="item" id="item" class="input input-bordered w-full" placeholder="Item..."
-            ng-class="{'input-accent': !error, 'input-error': error}" ng-model="item" ng-keyup="submitItem($event)">
+            ng-class="{'input-accent': !error, 'input-error': error, 'input-warning': editMode}" ng-model="item"
+            ng-keyup="submitItem($event)">
         <button class="w-full btn btn-success text-white p-1 mt-2" ng-click="addItem()" id="add-btn">Save</button>
         <span class="text-red-800 font-bold" ng-show="error">{{errorMessage}}.</span>
+        <button class="w-full btn btn-warning text-white p-1 mt-2" ng-click="cancelEdit()" ng-show="editMode"
+            id="cancel-edit-btn">Unselect</button>
     </div>
 </div>
 <div ng-controller="quoteController">
