@@ -58,7 +58,7 @@ app.controller('itemController', function ($scope, $rootScope, localStorageServi
 
         if ($rootScope.items.indexOf($scope.item) !== -1 && !$rootScope.editMode) {
             $rootScope.error = true;
-            $rootScope.errorMessage = 'This item is already in your shopping list';
+            $rootScope.errorMessage = 'This item is already in your list';
             return;
         }
 
